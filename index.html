@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Time Based Greetings</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body {
+          background-color: blueviolet;  color: blue; font-family: Arial, Helvetica, sans-serif; text-align: center; padding: 2rem; }
+        .card { 
+             display: inline-block; padding: 1.5rem 2rem; border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        h1 { margin: 0 0 0.5rem; }
+        p { margin: 0.4rem 0; font-size: 1.1rem; }
+        #time { font-weight: 600; font-size: 1.4rem; }
+
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Time based greetings</h1>
+        <p id="greeting">Welcome</p>
+        <p id="time">--:--:--</p>
+        <p id="date">Loading date...</p>
+        <p id="day">Loading day...</p>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            // formatted time (HH:MM:SS)
+            const timeString = now.toLocaleTimeString();
+            // formatted date like "Sunday, November 23, 2025"
+            const dateString = now.toLocaleDateString(undefined, {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+            const dayName = now.toLocaleDateString(undefined, { weekday: 'long' });
+
+            const hour = now.getHours();
+            let greeting;
+            if (hour >= 5 && hour < 12) {
+                greeting = 'Good morning';
+            } else if (hour >= 12 && hour < 17) {
+                greeting = 'Good afternoon';
+            } else if (hour >= 17 && hour < 21) {
+                greeting = 'Good evening';
+            } else {
+                greeting = 'Good night';
+            }
+
+            document.getElementById('time').textContent = timeString;
+            document.getElementById('date').textContent = dateString;
+            document.getElementById('day').textContent = dayName;
+            document.getElementById('greeting').textContent = `${greeting}! Welcome.`;
+        }
+
+        // initialize and update every second
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
